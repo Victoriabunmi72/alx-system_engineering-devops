@@ -1,5 +1,5 @@
 # creates a file in /tmp
-file { '/tmp/schcool':
+file { '/tmp/school':
   ensure   => file,
   checksum => 'md5',
   content  => 'I love Puppet',
