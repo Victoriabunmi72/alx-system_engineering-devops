@@ -1,5 +1,4 @@
 # creates a file in /tmp
-
 file { '/tmp/schcool':
   ensure   => file,
   checksum => 'md5',
