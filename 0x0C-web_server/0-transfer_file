@@ -13,6 +13,6 @@ if [ "$# -lt 4" ]; then
 	exit 1
 fi
 
-scp -o StrictHostKeyChecking=no -i "$path_to_file" "$ip" "$username" "$path_to_ssh":~/
+scp -o StrictHostKeyChecking=no -i "$path_to_ssh" "$path_to_file" "$username"@"$ip":~/
 
 exit 0 
