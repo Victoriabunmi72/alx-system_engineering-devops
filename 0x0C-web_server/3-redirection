@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+"""Replace a line with multiple lines with sed"""
+
+web-01 {
+	listen 80;
+
