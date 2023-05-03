@@ -1,6 +1,37 @@
 #!/usr/bin/env bash
 """Replace a line with multiple lines with sed"""
 
-web-01 {
-	listen 80;
+apt-get update -y
+apt-get upgrade -y
 
+#Install Nginx web server and allow HTTP traffic
+apt-get install nginx -y
+ufw allow 'Nginx HTTP'
+
+# Create default HTML file
+echo "Hello World!" > /var/www/html/index.html
+
+# Create Nginx server block
+cat > /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    if (\$request_filename ~ redirect_me){
+        rewrite ^ https://www.youtube.com/@tpauldike permanent;
+    }
+}
+EOF
+
+# Restart Nginx service
+if systemctl is-active --quiet nginx; then
+    systemctl restart nginx
+else
+    systemctl start nginx
+fi
