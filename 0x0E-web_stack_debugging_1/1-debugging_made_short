@@ -1,5 +1,5 @@
-#!/usr/bin/ env bash
-# Using what was done in task #0, the fix is made short and sweet.
+#!/usr/bin/env bash
+#  Using what was done in task #0, the fix is made short and sweet.
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 service nginx restart
