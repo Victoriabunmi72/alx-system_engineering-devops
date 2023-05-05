@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Configure your Nginx server to have a custom 404 that containsceci n'est pas une page.
 
+
 sudo apt-get -y update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
