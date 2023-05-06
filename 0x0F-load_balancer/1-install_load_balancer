@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 # Install and configure HAproxy on your lb-01 server.
 
-apt-get -y update
-apt-get -y install haproxy=1.6.\*
+sudo apt-get update
+sudo apt-get install -y haproxy
 
-# Configure haproxy configuration file to distribute requests using a roundrobin algorithm
-echo '
-frontend nimasolutions.tech
-        bind 0:80
-        default_backend web_servers
+sudo echo "ENABLED=1" > /etc/default/haproxy
 
-backend web_servers
-        balance roundrobin
-        server 64820-web-01 54.236.45.28
-        server 64820-web-02 52.3.241.77
-' >> /etc/haproxy/haproxy.cfg
+LISTEN="
+listen lb_server
+	bind *:80
+	mode http
+	balance roundrobin
+	option httpclose
+	option forwardfor
+	server web-01 52.87.233.163:80 check
+	server web-02 100.27.0.20:80 check
+"
 
-# Restart HAproxy service
-service haproxy restart
+sudo echo "$LISTEN" >> /etc/haproxy/haproxy.cfg
+sudo service haproxy start
