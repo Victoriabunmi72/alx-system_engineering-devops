@@ -1,8 +1,6 @@
 # 0x0F. Load balancer
----------------------------------------------------------------
 
 ## Background Context
-
 You have been given 2 additional servers:
 
 gc-[STUDENT_ID]-web-02-XXXXXXXXXX
