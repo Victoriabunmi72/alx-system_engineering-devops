@@ -37,23 +37,17 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-frontend www-http
-   	bind 0.0.0.0:80
-	http-request add-header X-Forwarded-Proto: http
-   	default_backend www-backend
+frontend codepygram-frontend-http
+        bind *:80
+        mode http
+        http-request set-header X-Forwarded-Proto http              default_backend codepygram-backend
 
-frontend www-https
-   	bind 0.0.0.0:443 ssl crt /etc/haproxy/certs/peersonline.tech.pem
-   	http-request add-header X-Forwarded-Proto: https 
-   	acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-   	use_backend letsencrypt-backend if letsencrypt-acl
-   	default_backend www-backend
+frontend codepygram-frontend-https
+        bind *:443 ssl crt /etc/haproxy/certs/www.codepygram.tech.py
+        http-request set-header X-Forwarded-Proto https
+        default_backend codepygram-backend
 
-backend www-backend
-	balance roundrobin
-   	redirect scheme https if !{ ssl_fc }
-   	server web-01 10.247.246.247:80 check
-   	server web-02 10.247.100.62:80 check
-
-backend letsencrypt-backend
-   	server letsencrypt 127.0.0.1:54321
+backend codepygra-backend
+        balance roundrobin
+        server web-01 52.87.233.163:80 check
+        server web-02 100.27.0.20:80 check
