@@ -56,8 +56,8 @@ frontend www-https
 backend www-backend
 	balance roundrobin
    	redirect scheme https if !{ ssl_fc }
-   	server web-01 10.247.246.247:80 check
-   	server web-02 10.247.100.62:80 check
+   	server web-01 52.87.233.163:80 check
+   	server web-02 100.27.0.20:80 check
 
 backend letsencrypt-backend
    	server letsencrypt 127.0.0.1:54321
