@@ -1,29 +1,29 @@
-#!/usr/bin/env bash
-# 2-puppet_custom_http_response_header.pp
+# Install Nginx server, setup and configuration with Puppet
 
-exec {'update':
-	provider => shell,
-	command  => 'sudo apt-get -y update',
-	before   => Exec['install nginx'],
-
+package { 'nginx':
+  ensure => 'installed'
 }
 
-exec {'install nginx':
-	provider => shell,
-	command  => 'sudo apt-get -y install nginx',
-	before   => Exec['add_header'],
-
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
 }
 
-exec {'add_header':
-	provider     => shell,
-	environment  => ["HOST=${HOSTNAME}"],
-	command      => 'echo "add_header X-Served-By $HOSTNAME;" | sudo tee -a /etc/nginx/nginx.conf > /dev/null',
-
+file_line { 'redirection-301':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.google.com permanent;',
 }
 
-exec {'restart nginx':
-	provider  => shell,
-	command   => 'sudo service nginx restart',
+file_line {'addHeader':
+    ensure  => 'present',
+    path    => '/etc/nginx/sites-available/default',
+    after   => 'listen 80 default_server;',
+    line    => 'add_header X-Served-By $HOSTNAME;',
+    require => Package['nginx'],
+}
 
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }
