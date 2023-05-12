@@ -1,10 +1,21 @@
-#!/usr/bin/env bash
-#Nginx should be listening on port 80
+# Install Nginx server, setup and configuration with Puppet
 
-exec {'install':
-	provider  => shell,
-	command   => 'sudo apt-get -y update; sudo apt-get -y install nginx;
-	echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html;
-	sudo sed -i "s/server_name _;/server_name _;\n\t
-	rewrite ^\/redirect_me rewrite ^ https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;/"
-	 /etc/nginx/sites-available/default; sudo service nginx start',
+package { 'nginx':
+  ensure => 'installed'
+}
+
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
+}
+
+file_line { 'redirection-301':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.Youtube.com permanent;',
+}
+
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
+}
