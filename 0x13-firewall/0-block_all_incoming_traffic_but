@@ -1,0 +1,23 @@
+# intalling ufw on ubunti 22.04
+
+sudo apt install ufw
+
+# I deny the incomming ufw
+
+sudo ufw default deny incoming
+
+# Then, I allow the outgoing ufw
+
+sudo ufw default allow outgoing
+
+sudo systemctl stop ufw
+
+# I allow the ports.
+
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+
+#Then, I enabled the ufw
+
+sudo ufw enable
