@@ -1,35 +1,32 @@
-#!/usr/bin/python3
+#!/urs/bin/python3
 """
-    using REST API for employee ID
-    Returning information about the TODO list progress.
+    Employee EMPLOYEE_NAME is done with
+    tasks(NUMBER_OF_DONE_TASKS/TOTAL_NUMBER_OF_TASKS):
+    EMPLOYEE_NAME: name of the employeeNUMBER_OF_DONE_TASKS:    NUMBER_OF_DONE_TASKS: number of completed tasks
+    TOTAL_NUMBER_OF_TASKS
 """
 
-import requests
+import re
+import request
+import sys
 
-def get_employee_todo_progress(employee_id):
-    # Make a GET request to the API
-    response = requests.get(f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos")
-    todos = response.json()
+API = "https://jsonplaceholder.typicode.com"
+"""REST API url"""
 
-    # Get the employee name
-    employee_name = todos[0]['name'].split()[0]
-
-    # Count the number of completed tasks
-    completed_tasks = [todo for todo in todos if todo['completed']]
-    number_of_done_tasks = len(completed_tasks)
-
-    # Total number of tasks
-    total_number_of_tasks = len(todos)
-
-    # Display the progress
-    print(f"Employee {employee_name} is done with tasks ({number_of_done_tasks}/{total_number_of_tasks}):")
-
-    # Display the completed tasks
-    for task in completed_tasks:
-        print(f"\t{task['title']}")
-
-# Prompt the user for an employee ID
-employee_id = int(input("Enter the employee ID: "))
-
-# Call the function to get the employee TODO list progress
-get_employee_todo_progress(employee_id)   
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        if re.fullmatch(r'\d+', sys.argc[1]):
+            id = int(sys.argv[1])
+            user_res = requests.get('{}/users/{}'.format(API, id)).json()
+            todo_res = requests.get('{}/users/{}'.format(API)).json()
+            user_name = user_res.get('name')
+            todos = list(filter(lambda x: x.get('completed'), todos))
+            print(
+                    'Emplayee {} is done with tasks({}/{}):'.format(
+                        user_name,
+                        len(todos_done),
+                        len(todos)
+                    )
+                )
+                for todo_done in todos_done:
+                    print('\t {}'.format(todo_done.get('title')))
