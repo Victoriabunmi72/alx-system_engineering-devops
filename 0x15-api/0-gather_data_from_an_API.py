@@ -1,32 +1,48 @@
-#!/urs/bin/python3
+#!/usr/bin/python3
 """
-    Employee EMPLOYEE_NAME is done with
-    tasks(NUMBER_OF_DONE_TASKS/TOTAL_NUMBER_OF_TASKS):
-    EMPLOYEE_NAME: name of the employeeNUMBER_OF_DONE_TASKS:    NUMBER_OF_DONE_TASKS: number of completed tasks
-    TOTAL_NUMBER_OF_TASKS
+a Python script that, using a REST API,
+for a given employee ID,
+returns information about his/her TODO list progress.
 """
 
-import re
-import request
+import json
 import sys
+import urllib.request
 
-API = "https://jsonplaceholder.typicode.com"
-"""REST API url"""
+if __name__ == "__main__":
+    employee_ID = sys.argv[1]
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if re.fullmatch(r'\d+', sys.argc[1]):
-            id = int(sys.argv[1])
-            user_res = requests.get('{}/users/{}'.format(API, id)).json()
-            todo_res = requests.get('{}/users/{}'.format(API)).json()
-            user_name = user_res.get('name')
-            todos = list(filter(lambda x: x.get('completed'), todos))
-            print(
-                    'Emplayee {} is done with tasks({}/{}):'.format(
-                        user_name,
-                        len(todos_done),
-                        len(todos)
-                    )
-                )
-                for todo_done in todos_done:
-                    print('\t {}'.format(todo_done.get('title')))
+    employee_data = urllib.request.urlopen(
+            "https://jsonplaceholder.typicode.com/users/{}/".format(
+                employee_ID))
+    employee_tasks = urllib.request.urlopen(
+            "https://jsonplaceholder.typicode.com/users/{}/todos/".format(
+                employee_ID))
+
+    employee_data_dict = json.loads(employee_data.read().decode())
+    employee_task_data_dict = json.loads(employee_tasks.read().decode())
+
+    task_done_count = 0  # counter for tasks done
+    total_tasks = 0  # counter for all tasks
+    completed_tasks = []  # list to contain completed tasks
+    for i in employee_task_data_dict:
+        if i["completed"] is True:
+            completed_tasks.append(i)
+            task_done_count += 1
+        total_tasks += 1
+
+    EMPLOYEE_NAME = employee_data_dict["name"]
+
+    print("Employee {} is done with tasks({}/{}):".format(
+        EMPLOYEE_NAME,
+        task_done_count,
+        total_tasks))
+
+    """
+    for i in employee_task_data_dict:
+        if i["completed"] is True:
+            print("\t{}".format(i["title"]))
+    """
+
+    for i in completed_tasks:
+        print("\t {}".format(i["title"]))
