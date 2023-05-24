@@ -1,11 +1,12 @@
-# Install Nginx server, setup and configuration with Puppet
+# Install Nginx and adds redirection custom error and header
 
 exec { 'update':
     command => '/usr/bin/apt-get update -y',
 }
 
 package { 'nginx':
-  ensure => 'installed'
+    ensure  => installed,
+    require => Exec['update']
 }
 
 file { '/var/www/html/index.html':
@@ -27,7 +28,7 @@ file_line {'addHeader':
     require => Package['nginx'],
 }
 
-service { 'nginx':
-  ensure  => running,
-  require => Package['nginx'],
+service {'nginx':
+    ensure  => running,
+    require => Package['nginx'],
 }
