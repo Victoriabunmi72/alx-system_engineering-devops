@@ -1,12 +1,22 @@
 #!/usr/bin/python3
-"""containing the recurse function"""
+'''
+Queries Reddit Api
+'''
 import requests
 
 
-def recurse(subreddit, hot_list=[], after="", count=0):
-    """It returns a list of titles of all hot posts on subreddit."""
-    user_agent = "Oluwabunmi Olabode"
+def recurse(subreddit, hot_list=[], next_page=None, count=0):
+    '''
+    Queries Reddit Api for recursively for titles
+    Args:
+        subreddit(str) - The name of the subreddit to check
+        hot_list - List to append
+        next_page - Page to be passed in parameter
+        count - Counter
+    '''
+    user_agent = 'Oluwabunmi Olabode'
     url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    # if page specified, pass as parameter
     if next_page:
         url += '?after={}'.format(next_page)
     headers = {'User-Agent': user_agent}
