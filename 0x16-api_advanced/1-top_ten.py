@@ -10,7 +10,7 @@ def top_ten(subreddit):
     """
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
 
-    data = requests.get(url, headers={'User-agent': 'Dragneel'},
+    data = requests.get(url, headers={'User-agent': 'Oluwabunmi Olabode'},
                         allow_redirects=False)
     if data.status_code == 200:
         post_list = data.json().get('data').get('children')
