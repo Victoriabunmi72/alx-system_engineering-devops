@@ -12,7 +12,7 @@ def number_of_subscribers(subreddit):
         subreddit(str) - The name of the subreddit to check the no of subs
     '''
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    data = requests.get(url, headers={'User-agent': 'Dragneel'})
+    data = requests.get(url, headers={'User-agent': 'Oluwabunmi Olabode'})
     if data.status_code == 200:
         return data.json().get('data').get('subscribers')
     else:
