@@ -8,8 +8,8 @@ Debugging
 $ apt-get install -y ruby
 $ gem install puppet-lint -v 2.1.1
 
-0. Sky is the limit, let's bring that limit higher:    
-### mandatory
+### 0. Sky is the limit, let's bring that limit higher:    
+ mandatory
 
-1. User limit
-### advanced
+### 1. User limit:
+ advanced
