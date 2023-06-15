@@ -13,8 +13,3 @@ Github:
 Victoriabunmi72
 Twitter:
 https://twitter.com/Victori32799425
-=======
-Victoriabunmi7
-Twitter:
-https://twitter.com/Victori327994252
->>>>>>> 4de0715 (README.md)
