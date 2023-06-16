@@ -9,6 +9,7 @@ Your web infrastructure is already serving web pages via Nginx that you installe
 Author:
 Oliuwabunmi Olabode.
 Github:
+<<<<<<< HEAD
 Victoriabunmi72
 Twitter:
 https://twitter.com/Victori32799425
